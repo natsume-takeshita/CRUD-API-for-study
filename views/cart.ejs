@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cart</title>
+
+</head>
+<body>
+  <%- include('header'); %>
+  <main>
+    <ul class="omusubilist">
+      <% usercartlist.forEach((usercartlist) => { %>
+        <li>
+          <% if (omusubi.category === 'limited') {%>
+            <i>期間限定</i> 
+          <% } %>           
+          <h2><%= omusubi.name %></h2>
+          <a href="/cart">カートに追加</a>
+        </li>
+        <% }) %>
+    </ul>
+  </main>
+  
+</body>
+</html>
