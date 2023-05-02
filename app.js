@@ -60,8 +60,11 @@ app.get('/list', (req, res) => {
   res.render('list.ejs',{omusubilist:omusubilist});
 });
 
-function addtocart(omusubi){
+app.get('/cart', (req, res) => {
+  res.render('cart.ejs',{cart:cart});
+});
 
+function addtocart(omusubi){
   for (let i = 0;i<10;i++){
     if (omusubi === cart[i][0]){
       if (omusubilist[i][3]>0){
@@ -70,7 +73,17 @@ function addtocart(omusubi){
       }
     }
   }
- 
+}
+
+function deletefromCart(omusubi) {
+  for (let i = 0;i<10;i++){
+    if (omusubi === cart[i][0]){
+      if (cart[i][2] > 0){
+        cart[i][2] -= 1;
+        omusubilist[i][3]+=1;         
+      }
+    }
+  }
 }
 
 app.get('/cart', (req, res) => {
@@ -79,10 +92,14 @@ app.get('/cart', (req, res) => {
 
 app.post('/list', (req, res) => {
   const omusubi = req.body.buyingOmusubi;
-  console.log(omusubi)
   addtocart(omusubi);
-  console.log(cart)
   res.redirect('/list');
+});
+
+app.post('/cart', (req, res) => {
+  const omusubi = req.body.deletingOmusubi;
+  deletefromCart(omusubi);
+  res.redirect('/cart');
 });
 
 
