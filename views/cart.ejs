@@ -1,24 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Cart</title>
+  <%- include('header'); %>
+  <li><a href="/list">メニュー一覧</a></li>
 
 </head>
 <body>
-  <%- include('header'); %>
   <main>
     <ul class="omusubilist">
-      <% usercartlist.forEach((usercartlist) => { %>
+      <% cart.forEach((omusubi) => { %>
         <li>
-          <% if (omusubi.category === 'limited') {%>
-            <i>期間限定</i> 
-          <% } %>           
-          <h2><%= omusubi.name %></h2>
-          <a href="/cart">カートに追加</a>
+          <% if (omusubi[2] > 0) {%>
+            <name><%= omusubi[0] %></name> 
+            <price><%= omusubi[1] %>円</price>
+            <num>× <%= omusubi[2] %></num>
+            <subtotal>= <%= omusubi[1]*omusubi[2] %>円</subtotal>
+            <form action="/cart" method="post">
+              <button type="submit" name="deletingOmusubi" value= <%- omusubi[0] %>>
+                カートから削除
+              </button>
+            </form>
+          <% } %> 
         </li>
         <% }) %>
     </ul>
+ 
   </main>
   
 </body>
