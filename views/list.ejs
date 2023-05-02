@@ -2,10 +2,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Shopping List</title>
+  <%- include('header'); %>
   <li><a href="/cart">カートへ</a></li>
 </head>
 <body>
-  <%- include('header'); %>
   <main>
     <ul class="omusubilist">
       <% omusubilist.forEach((omusubi) => { %>
@@ -15,9 +15,16 @@
           <% }else{ %> 
             <i>定番</i> 
             <%} %>           
-          <h2><%= omusubi[0] %></h2>
-          <h3><%= omusubi[3] %></h3>
-          <a href="/cart">カートに追加</a>
+          <name><%= omusubi[0] %></name>
+          <price><%= omusubi[1] %>円</price>
+          <% if (omusubi[3] === 0) {%>
+            <i>売り切れ</i> 
+          <% }else{ %> 
+            <i>残数<%= omusubi[3] %></i> 
+          <%} %>   
+          <form action="/list" method="post">
+            <button type="submit" name="buyingOmusubi" value= <%- omusubi[0] %>>カートに追加</button>
+          </form>
         </li>
         <% }) %>
     </ul>
