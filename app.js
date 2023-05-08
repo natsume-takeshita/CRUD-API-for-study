@@ -59,7 +59,7 @@ app.get('/', (req, res) => {
 
 app.get('/list', (req, res) => {
   connection.execute(
-    'SELECT * FROM omusubilist',
+    'SELECT * FROM omusubilist ORDER BY id',
     [],
     (error, results) => {
       res.render('list.ejs', { omusubilist: results });
@@ -123,22 +123,26 @@ app.post('/list', (req, res) => {
 app.post('/cart', (req, res) => {
   const omusubi = req.body.deletingOmusubi;
   connection.query(
-    'SELECT  name = ?',
+    'SELECT number FROM cart where name = ?',
     [omusubi],
     (error, results) => {
-
+      console.log(results[0].number,omusubi)
+      connection.query(
+        'UPDATE omusubilist SET stock = ?+stock WHERE name = ?',
+        [results[0].number,omusubi],
+        (error, results) => {
+        }
+        )
     }
   );
   connection.query(
     'UPDATE cart SET number = 0 WHERE name = ?',
     [omusubi],
     (error, results) => {
-
     }
   );
   res.redirect('/cart');
 });
-
 
 // app.get('/list', (req, res) => {
 //   connection.query(
