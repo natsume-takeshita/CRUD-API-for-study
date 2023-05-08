@@ -10,21 +10,21 @@
     <ul class="omusubilist">
       <% omusubilist.forEach((omusubi) => { %>
         <li>
-          <% if (omusubi[2] === '期間限定') {%>
+          <% if (omusubi.type === '期間限定') {%>
             <i>期間限定</i> 
           <% }else{ %> 
             <i>定番</i> 
             <%} %>           
-          <name><%= omusubi[0] %></name>
-          <price><%= omusubi[1] %>円</price>
-          <% if (omusubi[3] === 0) {%>
+          <name><%= omusubi.name %></name>
+          <price><%= omusubi.price %>円</price>
+          <% if (omusubi.stock < 1) {%>
             <i>売り切れ</i> 
           <% }else{ %> 
-            <i>残数<%= omusubi[3] %></i> 
+            <i>残数<%= omusubi.stock %></i> 
+            <form action="/list" method="post">
+              <button type="submit" name="buyingOmusubi" value= <%- omusubi.name %>>カートに追加</button>
+            </form>
           <%} %>   
-          <form action="/list" method="post">
-            <button type="submit" name="buyingOmusubi" value= <%- omusubi[0] %>>カートに追加</button>
-          </form>
         </li>
         <% }) %>
     </ul>

@@ -8,21 +8,21 @@
 </head>
 <body>
   <main>
-    <ul class="omusubilist">
+    <ul class="cart">
       <% cart.forEach((omusubi) => { %>
-        <li>
-          <% if (omusubi[2] > 0) {%>
-            <name><%= omusubi[0] %></name> 
-            <price><%= omusubi[1] %>円</price>
-            <num>× <%= omusubi[2] %></num>
-            <subtotal>= <%= omusubi[1]*omusubi[2] %>円</subtotal>
+        <% if (omusubi.number > 0) { %>
+          <li>     
+            <name><%= omusubi.name %></name> 
+            <price><%= omusubi.price %>円</price>
+            <num>× <%= omusubi.number %></num>
+            <subtotal>= <%= omusubi.price*omusubi.number %>円</subtotal>
             <form action="/cart" method="post">
-              <button type="submit" name="deletingOmusubi" value= <%- omusubi[0] %>>
+              <button type="submit" name="deletingOmusubi" value= <%- omusubi.name %>>
                 カートから削除
               </button>
             </form>
-          <% } %> 
-        </li>
+          </li>
+          <% } %>
         <% }) %>
     </ul>
  
